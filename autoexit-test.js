@@ -1,9 +1,9 @@
 /*
- * Lampa «Автовыход» (Android).
- * Lampa на Android держит экран включённым (FLAG_KEEP_SCREEN_ON), поэтому системный сон в ней не срабатывает.
- * Плагин закрывает Lampa после IDLE_MIN минут без нажатий на пульт, если видео не играет
- * (на паузе, закончилось или плеер закрыт). Дальше приставку усыпляет её собственный таймер сна.
- * За WARN_SEC секунд до выхода показывает предупреждение; любое нажатие его отменяет.
+ * Lampa Autoexit (Android).
+ * On Android, Lampa keeps the screen on (FLAG_KEEP_SCREEN_ON), so the device's own sleep timer never fires inside it.
+ * This plugin closes Lampa after IDLE_MIN minutes without a remote key press, but only while no video is playing
+ * (paused, ended, or the player is closed). The device's own sleep timer then puts it to sleep.
+ * WARN_SEC seconds before exiting it shows a notice; any key press cancels it.
  */
 (function () {
     'use strict';
@@ -11,8 +11,8 @@
     if (window.autoexit_plugin_loaded) return;
     window.autoexit_plugin_loaded = true;
 
-    var IDLE_MIN = 2;    // минут без нажатий
-    var WARN_SEC = 30;   // предупреждение до выхода
+    var IDLE_MIN = 2;    // minutes without a key press
+    var WARN_SEC = 30;   // notice shown this long before exiting
     var CHECK_MS = 10000;
 
     var last = Date.now();
@@ -51,12 +51,12 @@
             exitApp();
         } else if (!warned && idle >= limit - WARN_SEC * 1000) {
             warned = true;
-            try { Lampa.Noty.show('Нет активности: Lampa закроется через 30 секунд. Нажмите любую кнопку, чтобы остаться.'); } catch (e) {}
+            try { Lampa.Noty.show('No activity: Lampa will close in ' + WARN_SEC + ' seconds. Press any button to stay.'); } catch (e) {}
         }
     }
 
     function start() {
-        if (!canExit()) return; // не Android-приложение Lampa: ничего не делаем
+        if (!canExit()) return; // not the Lampa Android app: do nothing
 
         try { Lampa.Keypad.listener.follow('keydown', reset); } catch (e) {}
         window.addEventListener('keydown', reset, true);

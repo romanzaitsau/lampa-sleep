@@ -1,19 +1,21 @@
-# Lampa «Автовыход» (Android)
+# Lampa Autoexit (Android)
 
-Lampa на Android держит экран включённым, поэтому системный сон приставки в ней не срабатывает.
-Этот плагин закрывает Lampa после 30 минут без нажатий на пульт, и дальше приставку усыпляет её
-обычный таймер сна (а HDMI-CEC выключает телевизор).
+On Android, Lampa keeps the screen on, so the device's sleep timer never fires while it is open.
+This plugin closes Lampa after 30 minutes without a remote key press; the device's own sleep timer
+then puts it to sleep (and HDMI-CEC turns the TV off).
 
-- Во время воспроизведения не срабатывает: отсчёт идёт, только если видео на паузе, закончилось или плеер закрыт.
-- За минуту до выхода показывает уведомление; любое нажатие на пульт его отменяет.
-- Работает только в Android-приложении Lampa (нужен `AndroidJS.exit`), на других платформах ничего не делает.
+- Never fires during playback: the countdown runs only while the video is paused, has ended, or the player is closed.
+- Shows a notice one minute before exiting; any key press cancels it.
+- Works only in the Lampa Android app (it needs `AndroidJS.exit`); on other platforms it does nothing.
 
-## Установка
+## Install
 
-Lampa → Настройки → Расширения → Добавить плагин:
+Lampa → Settings → Extensions → Add plugin:
 
 ```
 https://romanzaitsau.github.io/lampa-sleep/autoexit.js
 ```
 
-Время меняется в начале `autoexit.js`: `IDLE_MIN` (минуты без нажатий) и `WARN_SEC` (предупреждение).
+For a quick test, `autoexit-test.js` exits after 2 minutes (notice 30 seconds before).
+
+The timings are at the top of `autoexit.js`: `IDLE_MIN` (minutes without a key press) and `WARN_SEC` (notice).
