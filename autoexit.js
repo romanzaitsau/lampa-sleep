@@ -11,7 +11,7 @@
     if (window.autoexit_plugin_loaded) return;
     window.autoexit_plugin_loaded = true;
 
-    var IDLE_MIN = 30;   // minutes without a key press
+    var IDLE_MIN = 15;   // minutes without a key press
     var WARN_SEC = 60;   // notice shown this long before exiting
     var CHECK_MS = 10000;
 
